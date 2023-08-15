@@ -1,7 +1,6 @@
 import { SpokenLanguage, SpokenLanguagesContainer } from "./styles"
 
 const SpokenLanguages = ({ languages, handleLanguageChange }) => {
-
     return (
         <SpokenLanguagesContainer>
             {languages && languages.map(language => (

@@ -9,6 +9,7 @@ export const LanguageListContainer = styled.ul`
     flex-wrap: wrap;
     gap: 10px;
     margin-top: 25px;
+    padding-bottom: 20px;
 `
 
 export const LanguageListItem = styled.div`

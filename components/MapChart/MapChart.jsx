@@ -9,12 +9,8 @@ import { Container, MapContainer } from "./styles";
 const geoUrl = "/features.json";
 
 const MapChart = ({ highlighted }) => {
-  const checkCountry = (country, geo) => {
-    if (country.cioc === geo.id || country.cca3 === geo.id) {
-      return true;
-    }
-    return false;
-  }
+  const checkCountry = (country, geo) => country.cioc === geo.id || country.cca3 === geo.id
+  
   return (
     <Container>
       <MapContainer>
