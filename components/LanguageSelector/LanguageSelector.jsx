@@ -42,14 +42,10 @@ const LanguageSelector = ({ highlighted, setHighlighted }) => {
     return (
         <LanguageSelectorContainer>
             <SelectLanguageTitle>Select your languages</SelectLanguageTitle>
-            {languagesSpoken.length > 0 ? (
-                <SpokenLanguages
-                    languages={languagesSpoken}
-                    handleLanguageChange={handleLanguageChange}
-                />
-            ) : (
-                (<p>No languages selected</p>)
-            )}
+            <SpokenLanguages
+                languages={languagesSpoken}
+                handleLanguageChange={handleLanguageChange}
+            />
             <LanguageList
                 handleLanguageChange={handleLanguageChange}
                 languagesSpoken={languagesSpoken}
