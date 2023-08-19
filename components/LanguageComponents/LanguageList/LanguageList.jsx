@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Output from '../../../public/output.json'
-import { LanguageListContainer, LanguageListItem } from './styles'
+import { FilterLanguageInput, LanguageListContainer, LanguageListItem } from './styles'
 
 const LanguageList = ({ handleLanguageChange, languagesSpoken }) => {
     const [search, setSearch] = useState('')
@@ -12,25 +12,27 @@ const LanguageList = ({ handleLanguageChange, languagesSpoken }) => {
     const includesSubstring = (language, search) => language.full.toLowerCase().includes(search.toLowerCase())
 
     return (
-        <LanguageListContainer>
-            <input 
-                type="text" 
+        <>
+            <FilterLanguageInput
+                type="text"
                 onChange={handleSearchChange}
                 placeholder='Type a language...'
             />
-            {Output.filter(language => includesSubstring(language, search)).map(language => (
-                <li key={language.id}>
-                    <LanguageListItem
-                        value={language.full}
-                        id={language.id}
-                        display={checkIfSelected(language.id)}
-                        onClick={() => handleLanguageChange(language)}
-                    >
-                        {language.full}
-                    </LanguageListItem>
-                </li>
-            ))}
-        </LanguageListContainer>
+            <LanguageListContainer>
+                {Output.filter(language => includesSubstring(language, search)).map(language => (
+                    <li key={language.id}>
+                        <LanguageListItem
+                            value={language.full}
+                            id={language.id}
+                            display={checkIfSelected(language.id)}
+                            onClick={() => handleLanguageChange(language)}
+                        >
+                            {language.full}
+                        </LanguageListItem>
+                    </li>
+                ))}
+            </LanguageListContainer>
+        </>
     )
 }
 

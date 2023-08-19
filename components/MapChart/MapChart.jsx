@@ -15,15 +15,15 @@ const MapChart = ({ highlighted }) => {
     <Container>
       <MapContainer>
         <ComposableMap
-          width={800}
-          height={800}
+          width={900}
+          height={900}
           projection="geoMercator"
         >
           <ZoomableGroup
             center={[0, 400]}
-            minZoom={0}
+            minZoom={1}
             maxZoom={10}
-            translateExtent={[[-300], [999, 800]]}
+            translateExtent={[[-30, -300], [930, 930]]}
           >
             <Geographies geography={geoUrl} stroke="#FFF" strokeWidth={0.5}>
               {({ geographies }) =>

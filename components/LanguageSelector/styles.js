@@ -9,6 +9,16 @@ export const LanguageSelectorContainer = styled.div`
     height: 90vh;
     color: white;
     overflow-y: scroll;
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+    &::-webkit-scrollbar-track {
+        border-right: solid 1px white;
+        border-left: solid 1px white;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: white;
+    }
 `
 
 export const SelectLanguageTitle = styled.h1`

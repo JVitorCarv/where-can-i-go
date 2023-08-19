@@ -15,4 +15,5 @@ export const SpokenLanguagesContainer = styled.div`
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
+    margin-bottom: 20px;
 `

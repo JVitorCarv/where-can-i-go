@@ -8,8 +8,7 @@ export const LanguageListContainer = styled.ul`
     justify-content: center;
     flex-wrap: wrap;
     gap: 10px;
-    margin-top: 25px;
-    padding-bottom: 20px;
+    margin: 20px 10px;
 `
 
 export const LanguageListItem = styled.div`
@@ -25,5 +24,18 @@ export const LanguageListItem = styled.div`
     &:hover {
         color: #42f56c;
         border-color: #42f56c;
+    }
+`
+
+export const FilterLanguageInput = styled.input`
+    background-color: #17274f;
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 25px;
+    transition: 2s ease-in-out;
+
+    &:focus {
+        outline: 1px solid white;
     }
 `
