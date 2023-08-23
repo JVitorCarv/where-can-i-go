@@ -12,6 +12,7 @@ export const StyledGeography = styled(Geography)`
         }
     `}
     outline: none;
+    cursor: pointer;
 `;
 
 export const MapContainer = styled.div`

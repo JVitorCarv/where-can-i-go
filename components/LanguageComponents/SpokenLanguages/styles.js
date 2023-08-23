@@ -17,3 +17,7 @@ export const SpokenLanguagesContainer = styled.div`
     gap: 10px;
     margin-bottom: 20px;
 `
+
+export const Warning = styled.p`
+    text-align: center;
+`

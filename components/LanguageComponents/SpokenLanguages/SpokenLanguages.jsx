@@ -1,4 +1,4 @@
-import { SpokenLanguage, SpokenLanguagesContainer } from "./styles"
+import { SpokenLanguage, SpokenLanguagesContainer, Warning } from "./styles"
 
 const SpokenLanguages = ({ languages, handleLanguageChange }) => {
     return (
@@ -10,7 +10,7 @@ const SpokenLanguages = ({ languages, handleLanguageChange }) => {
                     </SpokenLanguage>
                 ))
             ) : (
-                <p>No language selected</p>
+                <Warning>No language selected</Warning>
             )}
         </SpokenLanguagesContainer>
   )

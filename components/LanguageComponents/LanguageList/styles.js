@@ -34,6 +34,7 @@ export const FilterLanguageInput = styled.input`
     padding: 10px;
     border-radius: 25px;
     transition: 2s ease-in-out;
+    width: 70%;
 
     &:focus {
         outline: 1px solid white;

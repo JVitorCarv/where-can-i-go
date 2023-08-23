@@ -5,14 +5,32 @@ import {
 } from "react-simple-maps";
 import { StyledGeography } from "./styles";
 import { Container, MapContainer } from "./styles";
+import { useState } from "react";
+import CountryName from "../CountryName/CountryName";
 
 const geoUrl = "/features.json";
 
 const MapChart = ({ highlighted }) => {
+  const [displayCountryName, setDisplayCountryName] = useState(false)
+  const [countryName, setCountryName] = useState('')
+
   const checkCountry = (country, geo) => country.cioc === geo.id || country.cca3 === geo.id
+  
+  const handleMouseOver = (geoName) => {
+    setDisplayCountryName(true)
+    setCountryName(geoName)
+    console.log(geoName)
+  }
+
+  const handleMouseOut = (geoName) => {
+    setDisplayCountryName(false)
+    setCountryName('')
+    console.log(`leaving ${geoName}`)
+  }
   
   return (
     <Container>
+      <CountryName name={countryName}/>
       <MapContainer>
         <ComposableMap
           width={900}
@@ -34,7 +52,8 @@ const MapChart = ({ highlighted }) => {
                       key={geo.rsmKey}
                       geography={geo}
                       ishighlighted={isHighlighted}
-                      onClick={() => console.log(geo.properties.name)}
+                      onMouseOver={() => handleMouseOver(geo.properties.name)}
+                      onMouseOut={() => handleMouseOut(geo.properties.name)}
                     />
                   );
                 })
