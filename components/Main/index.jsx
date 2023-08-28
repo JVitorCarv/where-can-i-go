@@ -1,5 +1,5 @@
-import LanguageSelector from '../LanguageSelector/LanguageSelector'
-import MapChart from '../MapChart/MapChart'
+import LanguageSelector from '../LanguageSelector'
+import MapChart from '../MapChart'
 import { MainContainer } from './styles'
 import { useState } from 'react'
 

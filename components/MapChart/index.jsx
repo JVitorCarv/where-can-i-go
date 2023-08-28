@@ -6,31 +6,34 @@ import {
 import { StyledGeography } from "./styles";
 import { Container, MapContainer } from "./styles";
 import { useState } from "react";
-import CountryName from "../CountryName/CountryName";
+import CountryName from "../CountryName";
 
 const geoUrl = "/features.json";
 
 const MapChart = ({ highlighted }) => {
-  const [displayCountryName, setDisplayCountryName] = useState(false)
-  const [countryName, setCountryName] = useState('')
+  const [countryInfo, setCountryInfo] = useState({})
 
   const checkCountry = (country, geo) => country.cioc === geo.id || country.cca3 === geo.id
   
-  const handleMouseOver = (geoName) => {
-    setDisplayCountryName(true)
-    setCountryName(geoName)
-    console.log(geoName)
+  const checkIfHighlighted = (geo) => highlighted.some(country => checkCountry(country, geo))
+  
+  const handleMouseOver = (geo) => {
+    let languages = [] 
+    if (checkIfHighlighted(geo)) {
+      languages = highlighted.filter(country => checkCountry(country, geo))
+                             .map(country => country.fullLanguage)
+    }
+    setCountryInfo({
+      name: geo.properties.name,
+      languages: languages
+    })
   }
 
-  const handleMouseOut = (geoName) => {
-    setDisplayCountryName(false)
-    setCountryName('')
-    console.log(`leaving ${geoName}`)
-  }
+  const handleMouseOut = () => setCountryInfo({})
   
   return (
     <Container>
-      <CountryName name={countryName}/>
+      <CountryName countryInfo={countryInfo}/>
       <MapContainer>
         <ComposableMap
           width={900}
@@ -46,14 +49,14 @@ const MapChart = ({ highlighted }) => {
             <Geographies geography={geoUrl} stroke="#FFF" strokeWidth={0.5}>
               {({ geographies }) =>
                 geographies.map((geo) => {
-                  const isHighlighted = highlighted.some(country => checkCountry(country, geo))
+                  const isHighlighted = checkIfHighlighted(geo)
                   return (
                     <StyledGeography
                       key={geo.rsmKey}
                       geography={geo}
                       ishighlighted={isHighlighted}
-                      onMouseOver={() => handleMouseOver(geo.properties.name)}
-                      onMouseOut={() => handleMouseOut(geo.properties.name)}
+                      onMouseOver={() => handleMouseOver(geo)}
+                      onMouseOut={() => handleMouseOut(geo)}
                     />
                   );
                 })

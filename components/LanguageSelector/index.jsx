@@ -1,6 +1,6 @@
 import { LanguageSelectorContainer, SelectLanguageTitle } from "./styles"
-import SpokenLanguages from "../LanguageComponents/SpokenLanguages/SpokenLanguages"
-import LanguageList from "../LanguageComponents/LanguageList/LanguageList"
+import SpokenLanguages from "../LanguageComponents/SpokenLanguages"
+import LanguageList from "../LanguageComponents/LanguageList"
 import { useState } from "react"
 import axios from "axios"
 
@@ -19,13 +19,14 @@ const LanguageSelector = ({ highlighted, setHighlighted }) => {
 
     const fetchLanguage = async (language) => {
         try {
-            const response = await axios.get(`https://restcountries.com/v3.1/lang/${language}?fields=cioc,cca3`)
+            const response = await axios.get(`https://restcountries.com/v3.1/lang/${language}?fields=cioc,cca3,languages`)
             const countryList = []
             response.data.forEach(country => {
                 countryList.push({
                     cioc: country.cioc,
                     cca3: country.cca3,
-                    language: language
+                    language: language,
+                    fullLanguage: country.languages[language]
                 });
             })
             setHighlighted([...highlighted, ...countryList])

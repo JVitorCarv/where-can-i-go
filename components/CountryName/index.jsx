@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { CursorFollowingDiv } from "./styles";
 
-const CountryName = ({ name }) => {
+const CountryName = ({ countryInfo }) => {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
 
   const handleMouseMove = (event) =>
@@ -16,11 +16,11 @@ const CountryName = ({ name }) => {
   }, []);
   return (
     <>
-        {name && (<CursorFollowingDiv
+        {Object.keys(countryInfo).length != 0 && (<CursorFollowingDiv
             left={cursorPosition.x + 30}
             top={cursorPosition.y + 50}
         >
-            {name}
+            {countryInfo.name}
         </CursorFollowingDiv>)}
     </>
   );

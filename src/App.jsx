@@ -1,5 +1,5 @@
-import Main from '../components/Main/Main'
-import Navbar from '../components/Navbar/Navbar'
+import Main from '../components/Main'
+import Navbar from '../components/Navbar'
 
 function App() {
   return (
