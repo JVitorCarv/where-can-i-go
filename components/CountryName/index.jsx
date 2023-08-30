@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CursorFollowingDiv } from "./styles";
+
 
 const CountryName = ({ countryInfo }) => {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
@@ -14,6 +15,13 @@ const CountryName = ({ countryInfo }) => {
       document.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
+
+  const languageItems = useMemo(() => {
+    if (countryInfo.languages) {
+      return countryInfo.languages.map((l) => <p key={l}>{l}</p>)
+    }
+  }, [countryInfo.languages])
+
   return (
     <>
         {Object.keys(countryInfo).length != 0 && (<CursorFollowingDiv
@@ -21,6 +29,7 @@ const CountryName = ({ countryInfo }) => {
             top={cursorPosition.y + 50}
         >
             {countryInfo.name}
+            {languageItems}
         </CursorFollowingDiv>)}
     </>
   );
