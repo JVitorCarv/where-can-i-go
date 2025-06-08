@@ -1,58 +1,62 @@
-name: Artifacts Comparison
+name: Deploy static content to Pages
 
 on:
+  push:
+    branches: ['main']
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
 jobs:
-  node-modules:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-node@v4
-      - run: |
-          npm i react react-dom react-script create-react-app webpack
-      - uses: actions/upload-artifact@v4
-        name: "Upload Node Modules - v4"
+      # 1. Fazer checkout do código
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # 2. (Opcional) Se não usar Node, remova esse passo
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          name: node_modules-v4
-          path: node_modules
-      - uses: actions/upload-artifact@v3
-        name: "Upload Node Modules - v3"
+          node-version: '18'
+          cache: npm
+
+      # 3. Instalar dependências
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. Build do projeto
+      - name: Build
+        run: npm run build
+
+      # 5. Criar diretório de saída (exemplo: dist ou build)
+      - name: Prepare Pages
+        run: |
+          mkdir -p ./out
+          cp -R ./dist/* ./out/
+
+      # 6. Configurar GitHub Pages
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+
+      # 7. Depósito do artefato
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v1
         with:
-          name: node_modules-v3
-          path: node_modules
-      - uses: actions/download-artifact@v4
-        name: "Download Node Modules - v4"
-        with:
-          name: node_modules-v4
-          path: node_modules-v4
-      - uses: actions/download-artifact@v3
-        name: "Download Node Modules - v3"
-        with:
-          name: node_modules-v3
-          path: node_modules-v3
-  big-artifact:
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          dd if=/dev/urandom of=1gb-random bs=1M count=1000
-      - uses: actions/upload-artifact@v4
-        name: "Upload 1GB - v4"
-        with:
-          name: 1gb-v4
-          path: 1gb-random
-          compression-level: 0
-      - uses: actions/upload-artifact@v3
-        name: "Upload 1GB - v3"
-        with:
-          name: 1gb-v3
-          path: 1gb-random
-      - uses: actions/download-artifact@v4
-        name: "Download 1GB - v4"
-        with:
-          name: 1gb-v4
-          path: 1gb-v4
-      - uses: actions/download-artifact@v3
-        name: "Download 1GB - v3"
-        with:
-          name: 1gb-v3
-          path: 1gb-v3  
+          path: ./out
+
+      # 8. Deploy para GitHub Pages
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v1
