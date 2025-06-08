@@ -21,42 +21,29 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      # 1. Fazer checkout do código
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      # 2. (Opcional) Se não usar Node, remova esse passo
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-          cache: npm
+          cache: 'npm'
 
-      # 3. Instalar dependências
       - name: Install dependencies
         run: npm ci
 
-      # 4. Build do projeto
       - name: Build
         run: npm run build
 
-      # 5. Criar diretório de saída (exemplo: dist ou build)
-      - name: Prepare Pages
-        run: |
-          mkdir -p ./out
-          cp -R ./dist/* ./out/
-
-      # 6. Configurar GitHub Pages
       - name: Setup Pages
-        uses: actions/configure-pages@v3
+        uses: actions/configure-pages@v5
 
-      # 7. Depósito do artefato
-      - name: Upload Pages Artifact
-        uses: actions/upload-pages-artifact@v1
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out
+          path: './dist'
 
-      # 8. Deploy para GitHub Pages
-      - name: Deploy
+      - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v4
