@@ -8,7 +8,7 @@ import { Container, MapContainer } from "./styles";
 import { useState } from "react";
 import CountryName from "../CountryName";
 
-const geoUrl = "/features.json";
+const geoUrl = `${import.meta.env.BASE_URL}features.json`;;
 
 const MapChart = ({ highlighted }) => {
   const [countryInfo, setCountryInfo] = useState({})
